@@ -45,9 +45,31 @@ if [[ -z "$PACKAGE_ID" || -z "$PACKAGE_VERSION" ]]; then
     exit 1
 fi
 
-if [[ ! "$PACKAGE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+if [[ ! "$PACKAGE_VERSION" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
     echo "error: Version must use MAJOR.MINOR.PATCH format: $PACKAGE_VERSION" >&2
     exit 1
+fi
+
+# Local builds bump to the next version and rewrite control to match after a
+# successful build, so control and the produced debs always agree. CI builds
+# the version control declares, so a tag's packages carry exactly the tag's
+# version.
+if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+    BUILD_VERSION="$PACKAGE_VERSION"
+else
+    # PATCH counts 0-10; past 10 it carries into MINOR (3.0.10 -> 3.1.0), MINOR likewise into MAJOR.
+    BUILD_MAJOR="${BASH_REMATCH[1]}"
+    BUILD_MINOR="${BASH_REMATCH[2]}"
+    BUILD_PATCH="$((10#${BASH_REMATCH[3]} + 1))"
+    if (( BUILD_PATCH > 10 )); then
+        BUILD_PATCH=0
+        BUILD_MINOR="$((10#${BASH_REMATCH[2]} + 1))"
+    fi
+    if (( BUILD_MINOR > 10 )); then
+        BUILD_MINOR=0
+        BUILD_MAJOR="$((10#${BASH_REMATCH[1]} + 1))"
+    fi
+    BUILD_VERSION="${BUILD_MAJOR}.${BUILD_MINOR}.${BUILD_PATCH}"
 fi
 
 build_one() {
@@ -56,7 +78,7 @@ build_one() {
     local deployment_version="$3"
     local sdk_path="$THEOS/sdks/iPhoneOS${sdk_version}.sdk"
     local output_dir="$ROOT_DIR/packages/$label"
-    local output_path="$output_dir/${PACKAGE_ID}_${PACKAGE_VERSION}_${label}_iphoneos-arm64e.deb"
+    local output_path="$output_dir/${PACKAGE_ID}_${BUILD_VERSION}_${label}_iphoneos-arm64e.deb"
 
     if [[ ! -d "$sdk_path" ]]; then
         echo "error: required SDK not found: $sdk_path" >&2
@@ -77,14 +99,14 @@ build_one() {
             THEOS_PACKAGE_SCHEME=roothide \
             TARGET="iphone:clang:${sdk_version}:${deployment_version}" \
             PREFIX= \
-            FINALPACKAGE=1 PACKAGE_VERSION="$PACKAGE_VERSION"
+            FINALPACKAGE=1 PACKAGE_VERSION="$BUILD_VERSION"
     )
 
     mkdir -p "$output_dir"
     find "$output_dir" -maxdepth 1 -type f -name '*.deb' -delete 2>/dev/null || true
 
     local package_path
-    package_path="$(find "$ROOT_DIR/packages" -maxdepth 1 -type f -name "${PACKAGE_ID}_${PACKAGE_VERSION}_*.deb" -print -quit)"
+    package_path="$(find "$ROOT_DIR/packages" -maxdepth 1 -type f -name "${PACKAGE_ID}_${BUILD_VERSION}_*.deb" -print -quit)"
     if [[ -z "$package_path" ]]; then
         echo "error: package was not produced for $label" >&2
         exit 1
@@ -99,4 +121,28 @@ build_one ios16 16.5 16.0
 # build against the iOS 16 SDK while retaining iOS 15+ ABI support.
 build_one ios17 16.5 15.0
 
-echo "==> Build completed successfully: $PACKAGE_ID $PACKAGE_VERSION"
+if [[ "$BUILD_VERSION" != "$PACKAGE_VERSION" ]]; then
+    # Persist the bumped version only after both platform builds succeeded,
+    # so control always names the last successfully built packages.
+    CONTROL_TMP="$(mktemp "$ROOT_DIR/control.tmp.XXXXXX")"
+    trap 'rm -f "$CONTROL_TMP"' EXIT
+
+    awk -v build_version="$BUILD_VERSION" '
+        BEGIN { updated = 0 }
+        /^Version:/ {
+            print "Version: " build_version
+            updated = 1
+            next
+        }
+        { print }
+        END {
+            if (!updated) exit 1
+        }
+    ' "$ROOT_DIR/control" > "$CONTROL_TMP"
+    mv "$CONTROL_TMP" "$ROOT_DIR/control"
+    trap - EXIT
+
+    echo "==> Build completed successfully: $PACKAGE_ID $PACKAGE_VERSION -> $BUILD_VERSION (control updated)"
+else
+    echo "==> Build completed successfully: $PACKAGE_ID $BUILD_VERSION"
+fi
