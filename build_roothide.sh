@@ -23,18 +23,19 @@ fi
 
 # The roothide-scheme Cephei frameworks (jbroot install-names) are vendored
 # in this repo; theos searches vendor/lib/iphone/roothide first when the
-# roothide scheme is active. Install them if this Theos doesn't have them yet.
+# roothide scheme is active. The CI theos is cached by theos-action, so
+# reinstall unconditionally to guarantee this repo's current frameworks
+# are what gets linked.
 CEPHEI_DEST_DIR="$THEOS/vendor/lib/iphone/roothide"
 for framework in Cephei CepheiPrefs CepheiUI; do
-    if [[ ! -e "$CEPHEI_DEST_DIR/$framework.framework" ]]; then
-        if [[ ! -d "$ROOT_DIR/Vendor/Cephei/$framework.framework" ]]; then
-            echo "error: vendored framework not found: $ROOT_DIR/Vendor/Cephei/$framework.framework" >&2
-            exit 1
-        fi
-        echo "==> Installing $framework.framework into $CEPHEI_DEST_DIR"
-        mkdir -p "$CEPHEI_DEST_DIR"
-        cp -R "$ROOT_DIR/Vendor/Cephei/$framework.framework" "$CEPHEI_DEST_DIR/"
+    if [[ ! -d "$ROOT_DIR/Vendor/Cephei/$framework.framework" ]]; then
+        echo "error: vendored framework not found: $ROOT_DIR/Vendor/Cephei/$framework.framework" >&2
+        exit 1
     fi
+    echo "==> Installing $framework.framework into $CEPHEI_DEST_DIR"
+    rm -rf "$CEPHEI_DEST_DIR/$framework.framework"
+    mkdir -p "$CEPHEI_DEST_DIR"
+    cp -R "$ROOT_DIR/Vendor/Cephei/$framework.framework" "$CEPHEI_DEST_DIR/"
 done
 
 PACKAGE_ID="$(awk -F': ' '/^Package:/{print $2; exit}' "$ROOT_DIR/control")"
