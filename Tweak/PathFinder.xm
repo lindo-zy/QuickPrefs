@@ -1,4 +1,5 @@
 #import "Tweak.h"
+#import "rootless.h"
 #import <Preferences/PSListController.h>
 #import <Preferences/PSTableCell.h>
 #import <Preferences/PSSpecifier.h>
@@ -12,6 +13,26 @@ BOOL pathFinderEnabled;
 UILongPressGestureRecognizer *longPressGestureRecognizer;
 
 %group PathFinder
+
+static NSString *quickPrefsLocalizedString(NSString *key, NSString *fallback) {
+    static NSBundle *prefsBundle;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        // The tweak dylib ships no .lproj of its own; reuse the Prefs bundle's strings.
+        // The bundle is not necessarily loaded when long-pressing stock Settings pages,
+        // so fall back to loading it from its install path.
+        Class prefsClass = NSClassFromString(@"QPPrefsListController");
+        if (prefsClass) {
+            prefsBundle = [NSBundle bundleForClass:prefsClass];
+        } else {
+            prefsBundle = [NSBundle bundleWithPath:ROOT_PATH_NS(@"/Library/PreferenceBundles/QuickPrefsPrefs.bundle")];
+        }
+    });
+    if (!prefsBundle) {
+        return fallback;
+    }
+    return [prefsBundle localizedStringForKey:key value:fallback table:@"Prefs"];
+}
 
 static void addGestureRecognizerToListVC(PSListController *listVC) {
     DLog(@"addGestureRecognizerToTable");
@@ -41,14 +62,15 @@ static void handleGesture(UIGestureRecognizer *gestureRecognizer, PSListControll
     NSString *specifierIdentifier = [specifier identifier];
 
     if (specifierIdentifier) {
-        NSString *message = [NSString stringWithFormat:@"%@\n\nThis is the identifier of this page/subpage. Use it in QuickPrefs to access to this page. If this is a subpage, use it like this: PREVIOUS_PAGE_ID/%@", specifierIdentifier, specifierIdentifier];
-        
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"QuickPrefs Path Finder" message:message preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Copy ID" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSString *messageFormat = quickPrefsLocalizedString(@"PATH_FINDER_ALERT_MESSAGE", @"%1$@\n\nThis is the identifier of this page/subpage. Use it in QuickPrefs to access to this page. If this is a subpage, use it like this: PREVIOUS_PAGE_ID/%2$@");
+        NSString *message = [NSString stringWithFormat:messageFormat, specifierIdentifier, specifierIdentifier];
+
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:quickPrefsLocalizedString(@"PATH_FINDER_ALERT_TITLE", @"QuickPrefs Path Finder") message:message preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:quickPrefsLocalizedString(@"COPY_ID", @"Copy ID") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
             pasteboard.string = specifierIdentifier;
         }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:quickPrefsLocalizedString(@"OK", @"OK") style:UIAlertActionStyleDefault handler:nil]];
         
         [listVC presentViewController:alertController animated:YES completion:nil];
     }

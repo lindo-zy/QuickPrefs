@@ -46,6 +46,11 @@ For stock Settings panes, the values to use for the path are not straightforward
   "REVERSE_ITEMS_ORDER" = "Reverse items order";
   "PATH_FINDER_ENABLED" = "Path Finder enabled (read below)";
 
+  "PATH_FINDER_ALERT_TITLE" = "QuickPrefs Path Finder";
+  "PATH_FINDER_ALERT_MESSAGE" = "%1$@\n\nThis is the identifier of this page/subpage. Use it in QuickPrefs to access to this page. If this is a subpage, use it like this: PREVIOUS_PAGE_ID/%2$@";
+  "COPY_ID" = "Copy ID";
+  "RESPRING_BUTTON" = "Respring";
+
   "MY_OTHER_TWEAKS" = "My other tweaks";
   "CHECK_OUT_MY_OTHER_TWEAKS" = "Check out my other tweaks!";
 

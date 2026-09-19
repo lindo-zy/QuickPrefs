@@ -20,7 +20,7 @@
 
 你可以直接输入插件名称来打开它的设置面板。同时支持自定义路径，以便打开尽可能多的“设置”页面。将条目名称写为路径的形式，即可进入“设置”应用各分类下的子页面。
 
-对于系统原生页面，要使用的路径值并不直观。要找到你想要的路径，请先启用上方的 “Path Finder” 选项，然后长按你感兴趣的行来逐步构建路径。它会显示该行的标识符，并允许你将其拷贝到剪贴板。这样你就可以构建出诸如 “ACCESSIBILITY/DISPLAY_AND_TEXT/Smart Invert” 这样的路径。找到所需路径后，你可以关闭此选项。具体操作请观看下方视频。";
+对于系统原生页面，要使用的路径值并不直观。要找到你想要的路径，请先启用上方的“路径查找器”选项，然后长按你感兴趣的行来逐步构建路径。它会显示该行的标识符，并允许你将其拷贝到剪贴板。这样你就可以构建出诸如 “ACCESSIBILITY/DISPLAY_AND_TEXT/Smart Invert” 这样的路径。找到所需路径后，你可以关闭此选项。具体操作请观看下方视频。";
 
   "QUICK_PREFS_VIDEO" = "QuickPrefs 教程";
   "QUICK_PREFS_VIDEO_SUBTITLE" = "了解如何查找路径所需的标识符";
@@ -44,7 +44,12 @@
   "SHOW_ITEMS_ABOVE_STOCK_ITEMS" = "将条目显示在原生条目上方";
   "REMOVE_STOCK_ITEMS" = "移除原生条目";
   "REVERSE_ITEMS_ORDER" = "反转条目顺序";
-  "PATH_FINDER_ENABLED" = "启用 Path Finder（见下方说明）";
+  "PATH_FINDER_ENABLED" = "启用路径查找器（见下方说明）";
+
+  "PATH_FINDER_ALERT_TITLE" = "QuickPrefs 路径查找器";
+  "PATH_FINDER_ALERT_MESSAGE" = "%1$@\n\n这是此页面/子页面的标识符。在 QuickPrefs 中使用它即可访问此页面。如果这是子页面，请按如下格式使用：上一级页面标识符/%2$@";
+  "COPY_ID" = "拷贝标识符";
+  "RESPRING_BUTTON" = "注销";
 
   "MY_OTHER_TWEAKS" = "我的其他插件";
   "CHECK_OUT_MY_OTHER_TWEAKS" = "欢迎看看我的其他插件！";

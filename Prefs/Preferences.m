@@ -109,9 +109,9 @@ static void showAlert(NSString *myTitle, NSString *myMessage, UIViewController *
 }
 
 -(void) setupNavigationRespringButton {
-    self.respringButton = [[UIBarButtonItem alloc] initWithTitle:@"Respring" 
+    self.respringButton = [[UIBarButtonItem alloc] initWithTitle:QPLocalizedString(@"RESPRING_BUTTON", @"Respring")
                                 style:UIBarButtonItemStylePlain
-                                target:self 
+                                target:self
                                 action:@selector(respring:)];
     // self.respringButton.tintColor = [UIColor whiteColor];
 //    self.navigationItem.rightBarButtonItem = self.respringButton;
