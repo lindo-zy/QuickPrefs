@@ -1,0 +1,169 @@
+name: Build QuickPrefs RootHide
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+      - 'v*'
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: quickprefs-roothide-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: RootHide packages (iOS 16 and iOS 17)
+    runs-on: macos-14
+
+    defaults:
+      run:
+        working-directory: .
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup RootHide Theos
+        uses: waruhachi/theos-action@v2.4.6
+        with:
+          theos-src: roothide/theos
+          sdks-src: xybp888/iOS-SDKs
+
+      - name: Verify toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d "${THEOS}"
+          test -d "${THEOS}/sdks/iPhoneOS16.5.sdk"
+          test -x "${THEOS}/bin/ldid" || command -v ldid
+          xcodebuild -version
+          make --version | head -n 1
+          bash -n build_roothide.sh
+          echo "Using THEOS=${THEOS}"
+
+      - name: Build package
+        shell: bash
+        env:
+          THEOS_PACKAGE_SCHEME: roothide
+        run: |
+          set -euo pipefail
+          ./build_roothide.sh
+
+      - name: Verify and rename packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+
+          # 获取版本号（从标签或使用默认值）
+          VERSION="${GITHUB_REF_NAME#v}"
+          if [ -z "$VERSION" ] || [ "$VERSION" = "$GITHUB_REF_NAME" ]; then
+            VERSION="latest"
+          fi
+
+          for ios in ios16 ios17; do
+            packages=(packages/$ios/*.deb)
+            if (( ${#packages[@]} != 1 )); then
+              echo "Expected exactly one $ios package, found ${#packages[@]}." >&2
+              exit 1
+            fi
+            package="${packages[0]}"
+            test -s "$package"
+
+            # 重命名为更清晰的格式
+            new_name="QuickPrefs-RootHide-${ios}-${VERSION}.deb"
+            mv "$package" "packages/$ios/$new_name"
+            echo "Package: packages/$ios/$new_name"
+          done
+
+      - name: Upload iOS 16 Debian package
+        uses: actions/upload-artifact@v4
+        with:
+          name: quickprefs-roothide-ios16
+          path: packages/ios16/*.deb
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload iOS 17 Debian package
+        uses: actions/upload-artifact@v4
+        with:
+          name: quickprefs-roothide-ios17
+          path: packages/ios17/*.deb
+          if-no-files-found: error
+          retention-days: 14
+
+  release:
+    name: Publish GitHub Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+
+      - name: Prepare release assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+
+          # 查找所有 .deb 文件
+          deb_files=(release-assets/*/*.deb)
+
+          if (( ${#deb_files[@]} < 2 )); then
+            echo "Expected at least two Debian packages, found ${#deb_files[@]}." >&2
+            exit 1
+          fi
+
+          # 复制到根目录，保持可读的文件名
+          for package in "${deb_files[@]}"; do
+            cp "$package" "release-assets/$(basename "$package")"
+          done
+
+          echo "Final release assets:"
+          ls -l release-assets/*.deb
+
+      - name: Create or update GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          tag="${GITHUB_REF_NAME}"
+          assets=(release-assets/*.deb)
+
+          # 确保有资源要上传
+          if [ ${#assets[@]} -eq 0 ]; then
+            echo "Error: No assets found to upload!" >&2
+            exit 1
+          fi
+
+          echo "Tag: $tag"
+          echo "Assets to upload: ${assets[@]}"
+
+          # 检查发布版本是否存在，然后创建或更新
+          if gh release view "$tag" --repo "$GH_REPO" >/dev/null 2>&1; then
+            echo "Updating existing release: $tag"
+            gh release upload "$tag" "${assets[@]}" --repo "$GH_REPO" --clobber
+          else
+            echo "Creating new release: $tag"
+            gh release create "$tag" "${assets[@]}" --repo "$GH_REPO" \
+              --title "QuickPrefs $tag" \
+              --generate-notes
+          fi
+
+          echo "Release published successfully!"

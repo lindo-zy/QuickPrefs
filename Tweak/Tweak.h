@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "NSTask.h"
 #ifndef SIMULATOR
 #import <Cephei/HBPreferences.h>

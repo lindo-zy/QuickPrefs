@@ -2,6 +2,7 @@
 
 #define prefPath ROOT_PATH_NS_VAR(([NSString stringWithFormat:@"%@/Library/Preferences/%@", NSHomeDirectory(), @"com.anthopak.quickprefs.plist"]))
 #define prefsTintColor [UIColor colorWithRed:0.49 green:0.498 blue:0.518 alpha:1]
+#define QPLocalizedString(key, fallback) [[NSBundle bundleForClass:[QPPrefsListController class]] localizedStringForKey:(key) value:(fallback) table:@"Prefs"]
 
 static NSInteger headerPaddingTopBottom = 40;
 static NSInteger headerPaddingLeftRight = 10;
@@ -10,7 +11,7 @@ static NSInteger headerPaddingLeftRight = 10;
 
 static void showAlert(NSString *myTitle, NSString *myMessage, UIViewController *presentingController) {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:myTitle message:myMessage preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    [alertController addAction:[UIAlertAction actionWithTitle:QPLocalizedString(@"OK", @"OK") style:UIAlertActionStyleDefault handler:nil]];
     [presentingController presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -21,7 +22,13 @@ static void showAlert(NSString *myTitle, NSString *myMessage, UIViewController *
         HBAppearanceSettings *appearanceSettings = [[HBAppearanceSettings alloc] init];
         appearanceSettings.tableViewCellSeparatorColor = [UIColor colorWithWhite:0 alpha:0];
         appearanceSettings.tintColor = prefsTintColor;
-        self.hb_appearanceSettings = appearanceSettings;
+        // Cephei 2.0 renamed the appearance setter (hb_setAppearanceSettings:);
+        // fall back to the Cephei 1.x spelling on older installs.
+        if ([self respondsToSelector:@selector(hb_setAppearanceSettings:)]) {
+            self.hb_appearanceSettings = appearanceSettings;
+        } else if ([self respondsToSelector:@selector(setHb_appearanceSettings:)]) {
+            [self setValue:appearanceSettings forKey:@"hb_appearanceSettings"];
+        }
 
         [self setupNavigationTitleView];
         [self setupNavigationRespringButton];
@@ -36,9 +43,13 @@ static void showAlert(NSString *myTitle, NSString *myMessage, UIViewController *
     [self setupHeaderView];
 
     if ([self shouldShowNoticeForShuffle]) {
-        showAlert(@"You're using shuffle tweak", @"I've noticed that you're using shuffle tweak. Don't worry, it's supported!\n\nTo make QuickPrefs work with it, you will have to set items names like this : \"Tweaks/QuickPrefs\". If you have changed the default name for Tweaks category, change accordingly.\n\nCool thing is that you can also create an item \"Tweaks\" that will allow you to directly reach your Tweaks section.", self);
+        showAlert(QPLocalizedString(@"SHUFFLE_NOTICE_TITLE", @"You're using shuffle tweak"),
+                  QPLocalizedString(@"SHUFFLE_NOTICE_MESSAGE", @"I've noticed that you're using shuffle tweak. Don't worry, it's supported!\n\nTo make QuickPrefs work with it, you will have to set items names like this : \"Tweaks/QuickPrefs\". If you have changed the default name for Tweaks category, change accordingly.\n\nCool thing is that you can also create an item \"Tweaks\" that will allow you to directly reach your Tweaks section."),
+                  self);
     } else if ([self shouldShowNoticeForPreferenceOrganizer]) {
-        showAlert(@"You're using PreferenceOrganizer2 tweak", @"I've noticed that you're using PreferenceOrganizer2 tweak. Don't worry, it's supported!\n\nTo make QuickPrefs work with it, you will have to set items names like this : \"Cydia/QuickPrefs\". If you have changed the default name for Cydia category, change accordingly.\n\nCool thing is that you can also create an item \"Cydia\" that will allow you to directly reach your Cydia section.", self);
+        showAlert(QPLocalizedString(@"PREFERENCE_ORGANIZER_NOTICE_TITLE", @"You're using PreferenceOrganizer2 tweak"),
+                  QPLocalizedString(@"PREFERENCE_ORGANIZER_NOTICE_MESSAGE", @"I've noticed that you're using PreferenceOrganizer2 tweak. Don't worry, it's supported!\n\nTo make QuickPrefs work with it, you will have to set items names like this : \"Cydia/QuickPrefs\". If you have changed the default name for Cydia category, change accordingly.\n\nCool thing is that you can also create an item \"Cydia\" that will allow you to directly reach your Cydia section."),
+                  self);
     }
 
     self.table.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
