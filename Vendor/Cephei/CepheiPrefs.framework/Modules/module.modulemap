@@ -6,6 +6,6 @@ framework module CepheiPrefs {
 }
 
 module CepheiPrefs.Swift {
-	header "CepheiPrefs-Swift.h"
+	textual header "CepheiPrefs-Swift.h"
 	requires objc
 }
