@@ -72,6 +72,36 @@ else
     BUILD_VERSION="${BUILD_MAJOR}.${BUILD_MINOR}.${BUILD_PATCH}"
 fi
 
+# Keep the version the prefs UI displays in sync with the package version:
+# it is hardcoded in each localization of the Prefs strings table, so rewrite
+# every VERSION_NUMBER entry to the version being built. The verify step
+# fails the build if a localization no longer matches the expected format.
+sync_strings_versions() {
+    local file tmp synced=false
+    for file in "$ROOT_DIR"/Prefs/Resources/*.lproj/Prefs.strings; do
+        [[ -f "$file" ]] || continue
+        grep -q '"VERSION_NUMBER"' "$file" || continue
+        synced=true
+        tmp="$(mktemp "$ROOT_DIR/.strings.XXXXXX")"
+        sed "s/^\([[:space:]]*\"VERSION_NUMBER\" = \"[^0-9]*\)[0-9][0-9.]*/\1${BUILD_VERSION}/" "$file" > "$tmp" || {
+            rm -f "$tmp"
+            echo "error: failed to rewrite VERSION_NUMBER in ${file#"$ROOT_DIR"/}" >&2
+            exit 1
+        }
+        mv "$tmp" "$file"
+        grep -q "\"VERSION_NUMBER\" = \"[^\"]*${BUILD_VERSION}\";" "$file" || {
+            echo "error: VERSION_NUMBER in ${file#"$ROOT_DIR"/} does not match ${BUILD_VERSION}; expected 'key = \"<label> <version>\";'" >&2
+            exit 1
+        }
+        echo "==> Synced ${file#"$ROOT_DIR"/} VERSION_NUMBER -> ${BUILD_VERSION}"
+    done
+    if [[ "$synced" != true ]]; then
+        echo "error: no Prefs.strings containing VERSION_NUMBER found under Prefs/Resources" >&2
+        exit 1
+    fi
+}
+sync_strings_versions
+
 build_one() {
     local label="$1"
     local sdk_version="$2"
