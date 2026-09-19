@@ -1,0 +1,91 @@
+{
+  "ENABLED" = "启用";
+  "ENABLED_FOOTER" = "所有更改都会立即生效。";
+
+  "ITEMS_NAMES" = "条目名称";
+  "ITEMS_NAMES_FOOTER" = "- 最多可设置 12 个插件或系统设置页面的名称，名称必须与其在“设置”中显示的完全一致（区分大小写）。也可以使用自定义路径（查找标识符的方法见下文）。
+设置名称后按“换行”键确认，通常无需注销即可生效。
+- 也可以使用 “Respring”、“Safe Mode” 和 “UICache” 来创建条目，点击即可执行相应命令（关键词需用英文输入）。";
+  "TWEAK_NAME" = "插件名称或路径";
+
+  "MISCELLANEOUS" = "杂项";
+  "MISCELLANEOUS_FOOTER" = "当条目数量较多时，你需要隐藏原生条目，才能为自定义条目腾出空间。";
+
+  "EXAMPLES_AND_CUSTOM_URLS" = "示例与自定义路径";
+  "EXAMPLES_AND_CUSTOM_URLS_FOOTER" = "以下是一些可用的值示例：
+- QuickPrefs
+- Tweaks/QuickPrefs（如果你安装了 shuffle 或 PreferenceOrganizer2）
+- General/Keyboard
+- NOTIFICATIONS_ID
+
+你可以直接输入插件名称来打开它的设置面板。同时支持自定义路径，以便打开尽可能多的“设置”页面。将条目名称写为路径的形式，即可进入“设置”应用各分类下的子页面。
+
+对于系统原生页面，要使用的路径值并不直观。要找到你想要的路径，请先启用上方的 “Path Finder” 选项，然后长按你感兴趣的行来逐步构建路径。它会显示该行的标识符，并允许你将其拷贝到剪贴板。这样你就可以构建出诸如 “ACCESSIBILITY/DISPLAY_AND_TEXT/Smart Invert” 这样的路径。找到所需路径后，你可以关闭此选项。具体操作请观看下方视频。";
+
+  "QUICK_PREFS_VIDEO" = "QuickPrefs 教程";
+  "QUICK_PREFS_VIDEO_SUBTITLE" = "了解如何查找路径所需的标识符";
+
+  "SETTINGS_URLS_SPREADSHEET" = "原生设置页面 URL 表格";
+  "SETTINGS_URLS_SPREADSHEET_SUBTITLE" = "获取部分原生设置页面的对应值";
+
+  "ITEM_1" = "条目 1";
+  "ITEM_2" = "条目 2";
+  "ITEM_3" = "条目 3";
+  "ITEM_4" = "条目 4";
+  "ITEM_5" = "条目 5";
+  "ITEM_6" = "条目 6";
+  "ITEM_7" = "条目 7";
+  "ITEM_8" = "条目 8";
+  "ITEM_9" = "条目 9";
+  "ITEM_10" = "条目 10";
+  "ITEM_11" = "条目 11";
+  "ITEM_12" = "条目 12";
+
+  "SHOW_ITEMS_ABOVE_STOCK_ITEMS" = "将条目显示在原生条目上方";
+  "REMOVE_STOCK_ITEMS" = "移除原生条目";
+  "REVERSE_ITEMS_ORDER" = "反转条目顺序";
+  "PATH_FINDER_ENABLED" = "启用 Path Finder（见下方说明）";
+
+  "MY_OTHER_TWEAKS" = "我的其他插件";
+  "CHECK_OUT_MY_OTHER_TWEAKS" = "欢迎看看我的其他插件！";
+
+  "APPAZE_2" = "Appaze 2";
+  "APPAZE_2_SUBTITLE" = "按应用自定义音量/亮度/快捷开关，直接在 3D Touch 菜单中使用";
+  "LAST_LOOK" = "LastLook";
+  "LAST_LOOK_SUBTITLE" = "最后再看一眼你的手机！（支持 AOD 常显和短暂查看模式）";
+  "SLEEPIZY" = "Sleepizy";
+  "SLEEPIZY_SUBTITLE" = "伴着音乐入睡！从控制中心设置定时停止播放音乐";
+  "BLUE_FINDER" = "BlueFinder";
+  "BLUE_FINDER_SUBTITLE" = "用蓝牙设备帮你找回 iPhone！";
+  "SWITCH_SHADES" = "SwitchShades";
+  "SWITCH_SHADES_SUBTITLE" = "根据应用图标为应用切换器增添色彩";
+  "VIDEO_SWIPES" = "VideoSwipes";
+  "VIDEO_SWIPES_SUBTITLE" = "视频播放器滑动手势（原生、YouTube、Facebook）";
+  "PAN_CAKE" = "PanCake";
+  "PAN_CAKE_SUBTITLE" = "所有应用中全屏可用的交互式侧滑返回手势";
+  "ADD_TO_FOLDER" = "AddToFolder";
+  "ADD_TO_FOLDER_SUBTITLE" = "轻松将应用移入文件夹";
+  "NOTI_VIBE" = "NotiVibe";
+  "NOTI_VIBE_SUBTITLE" = "无需点亮手机也能知道是否有新通知！";
+
+  "VERSION_NUMBER" = "版本 1.3.3";
+  "RESPRING" = "注销（并非总是必需）";
+  "DONATE" = "捐赠";
+  "SUPPORT_ME" = "喜欢我的作品，想支持我吗？";
+  "GITHUB" = "GitHub";
+  "CHECK_THE_CODE" = "查看源代码！";
+
+  "OK" = "好";
+  "SHUFFLE_NOTICE_TITLE" = "检测到你正在使用 shuffle 插件";
+  "SHUFFLE_NOTICE_MESSAGE" = "检测到你正在使用 shuffle 插件。别担心，QuickPrefs 兼容它！
+
+要让 QuickPrefs 与之配合，需要将条目名称设置为类似 “Tweaks/QuickPrefs” 的形式。如果你修改过 Tweaks 分类的默认名称，请相应调整。
+
+另外，你还可以创建一个名为 “Tweaks” 的条目，点击后直接进入 Tweaks 分区。";
+  "PREFERENCE_ORGANIZER_NOTICE_TITLE" = "检测到你正在使用 PreferenceOrganizer2 插件";
+  "PREFERENCE_ORGANIZER_NOTICE_MESSAGE" = "检测到你正在使用 PreferenceOrganizer2 插件。别担心，QuickPrefs 兼容它！
+
+要让 QuickPrefs 与之配合，需要将条目名称设置为类似 “Cydia/QuickPrefs” 的形式。如果你修改过 Cydia 分类的默认名称，请相应调整。
+
+另外，你还可以创建一个名为 “Cydia” 的条目，点击后直接进入 Cydia 分区。";
+}

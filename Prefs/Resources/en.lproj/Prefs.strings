@@ -8,6 +8,7 @@ Respring shouldn't be required if you use the Return key after setting the name.
 - You can also use \"Respring\", \"Safe Mode\" and \"UICache\" to create items that will run said command.";
   "TWEAK_NAME" = "Tweak name or path";
 
+  "MISCELLANEOUS" = "MISCELLANEOUS";
   "MISCELLANEOUS_FOOTER" = "Starting from a certain number of items, you will have to hide stock items to make room for your items.";
 
   "EXAMPLES_AND_CUSTOM_URLS" = "EXAMPLES AND CUSTOM PATHS";
@@ -20,17 +21,71 @@ Respring shouldn't be required if you use the Return key after setting the name.
 You can write the name of a tweak to directly open its preferences pane. Custom paths are also supported to allow open as many Settings.app preferences panes as possible. You can write items names as paths to dive into subcategories of Settings.app categories.
 
 For stock Settings panes, the values to use for the path are not straightforward. To find out the path you want, enable \"Path Finder\" option above, and long press rows you're interested in to build the path. It will reveal the identifier of the row, and allow you to copy it to clipboard. This way you can build paths like \"ACCESSIBILITY/DISPLAY_AND_TEXT/Smart Invert\". You can disable this setting after you have found your path. Check out the video below to see how to do.";
-  
+
   "QUICK_PREFS_VIDEO" = "QuickPrefs tutorial";
   "QUICK_PREFS_VIDEO_SUBTITLE" = "Check out how to find identifiers for your paths";
 
   "SETTINGS_URLS_SPREADSHEET" = "Stock settings URLs spreadsheet";
   "SETTINGS_URLS_SPREADSHEET_SUBTITLE" = "Get values for some stock Settings panes";
 
-  "VERSION_NUMBER" = "Version 1.3.1";
+  "ITEM_1" = "Item 1";
+  "ITEM_2" = "Item 2";
+  "ITEM_3" = "Item 3";
+  "ITEM_4" = "Item 4";
+  "ITEM_5" = "Item 5";
+  "ITEM_6" = "Item 6";
+  "ITEM_7" = "Item 7";
+  "ITEM_8" = "Item 8";
+  "ITEM_9" = "Item 9";
+  "ITEM_10" = "Item 10";
+  "ITEM_11" = "Item 11";
+  "ITEM_12" = "Item 12";
+
+  "SHOW_ITEMS_ABOVE_STOCK_ITEMS" = "Show items above stock ones";
+  "REMOVE_STOCK_ITEMS" = "Remove stock items";
+  "REVERSE_ITEMS_ORDER" = "Reverse items order";
+  "PATH_FINDER_ENABLED" = "Path Finder enabled (read below)";
+
+  "MY_OTHER_TWEAKS" = "My other tweaks";
+  "CHECK_OUT_MY_OTHER_TWEAKS" = "Check out my other tweaks!";
+
+  "APPAZE_2" = "Appaze 2";
+  "APPAZE_2_SUBTITLE" = "Customize volume/brightness/toggles per app, directly from 3DTouch menu";
+  "LAST_LOOK" = "LastLook";
+  "LAST_LOOK_SUBTITLE" = "Get a last look at your phone! (AOD and Short modes)";
+  "SLEEPIZY" = "Sleepizy";
+  "SLEEPIZY_SUBTITLE" = "Fall asleep in music! Set a timer to stop your music directly from CC";
+  "BLUE_FINDER" = "BlueFinder";
+  "BLUE_FINDER_SUBTITLE" = "Find your iPhone using your Bluetooth devices!";
+  "SWITCH_SHADES" = "SwitchShades";
+  "SWITCH_SHADES_SUBTITLE" = "Bring color to your app switcher based on app icon";
+  "VIDEO_SWIPES" = "VideoSwipes";
+  "VIDEO_SWIPES_SUBTITLE" = "Swipe gestures for video players (native, YouTube, Facebook)";
+  "PAN_CAKE" = "PanCake";
+  "PAN_CAKE_SUBTITLE" = "Interactive dismiss gesture on whole screen in all apps";
+  "ADD_TO_FOLDER" = "AddToFolder";
+  "ADD_TO_FOLDER_SUBTITLE" = "Easily move apps to your folders";
+  "NOTI_VIBE" = "NotiVibe";
+  "NOTI_VIBE_SUBTITLE" = "Know if you have a notification without looking at your phone!";
+
+  "VERSION_NUMBER" = "Version 1.3.3";
   "RESPRING" = "Respring (not always required)";
   "DONATE" = "Donate";
   "SUPPORT_ME" = "You like my work and want to support me?";
   "GITHUB" = "GitHub";
   "CHECK_THE_CODE" = "Check out the code!";
+
+  "OK" = "OK";
+  "SHUFFLE_NOTICE_TITLE" = "You're using shuffle tweak";
+  "SHUFFLE_NOTICE_MESSAGE" = "I've noticed that you're using shuffle tweak. Don't worry, it's supported!
+
+To make QuickPrefs work with it, you will have to set items names like this : \"Tweaks/QuickPrefs\". If you have changed the default name for Tweaks category, change accordingly.
+
+Cool thing is that you can also create an item \"Tweaks\" that will allow you to directly reach your Tweaks section.";
+  "PREFERENCE_ORGANIZER_NOTICE_TITLE" = "You're using PreferenceOrganizer2 tweak";
+  "PREFERENCE_ORGANIZER_NOTICE_MESSAGE" = "I've noticed that you're using PreferenceOrganizer2 tweak. Don't worry, it's supported!
+
+To make QuickPrefs work with it, you will have to set items names like this : \"Cydia/QuickPrefs\". If you have changed the default name for Cydia category, change accordingly.
+
+Cool thing is that you can also create an item \"Cydia\" that will allow you to directly reach your Cydia section.";
 }

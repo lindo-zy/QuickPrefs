@@ -47,7 +47,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Item 1</string>
+			<string>ITEM_1</string>
 			<key>placeholder</key>
 			<string>TWEAK_NAME</string>		
 			<key>autoCaps</key>
@@ -65,7 +65,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Item 2</string>
+			<string>ITEM_2</string>
 			<key>placeholder</key>
 			<string>TWEAK_NAME</string>
 			<key>autoCaps</key>
@@ -83,7 +83,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Item 3</string>
+			<string>ITEM_3</string>
 			<key>placeholder</key>
 			<string>TWEAK_NAME</string>		
 			<key>autoCaps</key>
@@ -101,7 +101,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Item 4</string>
+			<string>ITEM_4</string>
 			<key>placeholder</key>
 			<string>TWEAK_NAME</string>
 			<key>autoCaps</key>
@@ -119,7 +119,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Item 5</string>
+			<string>ITEM_5</string>
 			<key>placeholder</key>
 			<string>TWEAK_NAME</string>
 			<key>autoCaps</key>
@@ -137,7 +137,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Item 6</string>
+			<string>ITEM_6</string>
 			<key>placeholder</key>
 			<string>TWEAK_NAME</string>
 			<key>autoCaps</key>
@@ -155,7 +155,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Item 7</string>
+			<string>ITEM_7</string>
 			<key>placeholder</key>
 			<string>TWEAK_NAME</string>
 			<key>autoCaps</key>
@@ -173,7 +173,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Item 8</string>
+			<string>ITEM_8</string>
 			<key>placeholder</key>
 			<string>TWEAK_NAME</string>
 			<key>autoCaps</key>
@@ -191,7 +191,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Item 9</string>
+			<string>ITEM_9</string>
 			<key>placeholder</key>
 			<string>TWEAK_NAME</string>
 			<key>autoCaps</key>
@@ -209,7 +209,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Item 10</string>
+			<string>ITEM_10</string>
 			<key>placeholder</key>
 			<string>TWEAK_NAME</string>
 			<key>autoCaps</key>
@@ -227,7 +227,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Item 11</string>
+			<string>ITEM_11</string>
 			<key>placeholder</key>
 			<string>TWEAK_NAME</string>
 			<key>autoCaps</key>
@@ -245,7 +245,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Item 12</string>
+			<string>ITEM_12</string>
 			<key>placeholder</key>
 			<string>TWEAK_NAME</string>
 			<key>autoCaps</key>
@@ -275,7 +275,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Show items above stock ones</string>
+			<string>SHOW_ITEMS_ABOVE_STOCK_ITEMS</string>
 			<key>key</key>
 			<string>quickPrefsItemsAboveStockItems</string>
 			<key>PostNotification</key>
@@ -289,7 +289,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Remove stock items</string>
+			<string>REMOVE_STOCK_ITEMS</string>
 			<key>key</key>
 			<string>removeStockItems</string>
 			<key>PostNotification</key>
@@ -303,7 +303,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Reverse items order</string>
+			<string>REVERSE_ITEMS_ORDER</string>
 			<key>key</key>
 			<string>reverseItemsOrder</string>
 			<key>PostNotification</key>
@@ -329,7 +329,7 @@
 			<key>defaults</key>
 			<string>com.anthopak.quickprefs</string>
 			<key>label</key>
-			<string>Path Finder enabled (read below)</string>
+			<string>PATH_FINDER_ENABLED</string>
 			<key>key</key>
 			<string>pathFinderEnabled</string>
 			<key>PostNotification</key>
@@ -368,17 +368,17 @@
 			<key>isStaticText</key>
 			<true/>
 			<key>label</key>
-			<string>My other tweaks</string>
+			<string>MY_OTHER_TWEAKS</string>
 			<key>footerText</key>
-			<string>Check out my other tweaks!</string>
+			<string>CHECK_OUT_MY_OTHER_TWEAKS</string>
 		</dict>
 		<dict>
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>Appaze 2</string>
+			<string>APPAZE_2</string>
 			<key>subtitle</key>
-			<string>Customize volume/brightness/toggles per app, directly from 3DTouch menu</string>
+			<string>APPAZE_2_SUBTITLE</string>
 			<key>icon</key>
     		<string>otherTweaks/appaze@2x.png</string>
 			<key>url</key>
@@ -388,9 +388,9 @@
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>LastLook</string>
+			<string>LAST_LOOK</string>
 			<key>subtitle</key>
-			<string>Get a last look at your phone! (AOD and Short modes)</string>
+			<string>LAST_LOOK_SUBTITLE</string>
 			<key>icon</key>
     		<string>otherTweaks/lastLook@2x.png</string>
 			<key>url</key>
@@ -400,9 +400,9 @@
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>Sleepizy</string>
+			<string>SLEEPIZY</string>
 			<key>subtitle</key>
-			<string>Fall asleep in music! Set a timer to stop your music directly from CC</string>
+			<string>SLEEPIZY_SUBTITLE</string>
 			<key>icon</key>
     		<string>otherTweaks/sleepizy@2x.png</string>
 			<key>url</key>
@@ -412,9 +412,9 @@
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>BlueFinder</string>
+			<string>BLUE_FINDER</string>
 			<key>subtitle</key>
-			<string>Find your iPhone using your Bluetooth devices!</string>
+			<string>BLUE_FINDER_SUBTITLE</string>
 			<key>icon</key>
     		<string>otherTweaks/blueFinder@2x.png</string>
 			<key>url</key>
@@ -424,9 +424,9 @@
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>SwitchShades</string>
+			<string>SWITCH_SHADES</string>
 			<key>subtitle</key>
-			<string>Bring color to your app switcher based on app icon</string>
+			<string>SWITCH_SHADES_SUBTITLE</string>
 			<key>icon</key>
     		<string>otherTweaks/switchShades@2x.png</string>
 			<key>url</key>
@@ -436,9 +436,9 @@
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>VideoSwipes</string>
+			<string>VIDEO_SWIPES</string>
 			<key>subtitle</key>
-			<string>Swipe gestures for video players (native, YouTube, Facebook)</string>
+			<string>VIDEO_SWIPES_SUBTITLE</string>
 			<key>icon</key>
     		<string>otherTweaks/videoSwipes@2x.png</string>
 			<key>url</key>
@@ -448,9 +448,9 @@
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>PanCake</string>
+			<string>PAN_CAKE</string>
 			<key>subtitle</key>
-			<string>Interactive dismiss gesture on whole screen in all apps</string>
+			<string>PAN_CAKE_SUBTITLE</string>
 			<key>icon</key>
     		<string>otherTweaks/panCake@2x.png</string>
 			<key>url</key>
@@ -460,9 +460,9 @@
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>AddToFolder</string>
+			<string>ADD_TO_FOLDER</string>
 			<key>subtitle</key>
-			<string>Easily move apps to your folders</string>
+			<string>ADD_TO_FOLDER_SUBTITLE</string>
 			<key>icon</key>
     		<string>otherTweaks/addToFolder@2x.png</string>
 			<key>url</key>
@@ -472,9 +472,9 @@
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>NotiVibe</string>
+			<string>NOTI_VIBE</string>
 			<key>subtitle</key>
-			<string>Know if you have a notification without looking at your phone!</string>
+			<string>NOTI_VIBE_SUBTITLE</string>
 			<key>icon</key>
     		<string>otherTweaks/notiVibe@2x.png</string>
 			<key>url</key>
