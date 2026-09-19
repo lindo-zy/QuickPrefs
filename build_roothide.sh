@@ -45,24 +45,10 @@ if [[ -z "$PACKAGE_ID" || -z "$PACKAGE_VERSION" ]]; then
     exit 1
 fi
 
-if [[ ! "$PACKAGE_VERSION" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+if [[ ! "$PACKAGE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     echo "error: Version must use MAJOR.MINOR.PATCH format: $PACKAGE_VERSION" >&2
     exit 1
 fi
-
-# PATCH counts 0-10; past 10 it carries into MINOR (3.0.10 -> 3.1.0), MINOR likewise into MAJOR.
-NEXT_MAJOR="${BASH_REMATCH[1]}"
-NEXT_MINOR="${BASH_REMATCH[2]}"
-NEXT_PATCH="$((10#${BASH_REMATCH[3]} + 1))"
-if (( NEXT_PATCH > 10 )); then
-    NEXT_PATCH=0
-    NEXT_MINOR="$((10#${BASH_REMATCH[2]} + 1))"
-fi
-if (( NEXT_MINOR > 10 )); then
-    NEXT_MINOR=0
-    NEXT_MAJOR="$((10#${BASH_REMATCH[1]} + 1))"
-fi
-NEXT_VERSION="${NEXT_MAJOR}.${NEXT_MINOR}.${NEXT_PATCH}"
 
 build_one() {
     local label="$1"
@@ -70,7 +56,7 @@ build_one() {
     local deployment_version="$3"
     local sdk_path="$THEOS/sdks/iPhoneOS${sdk_version}.sdk"
     local output_dir="$ROOT_DIR/packages/$label"
-    local output_path="$output_dir/${PACKAGE_ID}_${NEXT_VERSION}_${label}_iphoneos-arm64e.deb"
+    local output_path="$output_dir/${PACKAGE_ID}_${PACKAGE_VERSION}_${label}_iphoneos-arm64e.deb"
 
     if [[ ! -d "$sdk_path" ]]; then
         echo "error: required SDK not found: $sdk_path" >&2
@@ -91,14 +77,14 @@ build_one() {
             THEOS_PACKAGE_SCHEME=roothide \
             TARGET="iphone:clang:${sdk_version}:${deployment_version}" \
             PREFIX= \
-            FINALPACKAGE=1 PACKAGE_VERSION="$NEXT_VERSION"
+            FINALPACKAGE=1 PACKAGE_VERSION="$PACKAGE_VERSION"
     )
 
     mkdir -p "$output_dir"
     find "$output_dir" -maxdepth 1 -type f -name '*.deb' -delete 2>/dev/null || true
 
     local package_path
-    package_path="$(find "$ROOT_DIR/packages" -maxdepth 1 -type f -name "${PACKAGE_ID}_${NEXT_VERSION}_*.deb" -print -quit)"
+    package_path="$(find "$ROOT_DIR/packages" -maxdepth 1 -type f -name "${PACKAGE_ID}_${PACKAGE_VERSION}_*.deb" -print -quit)"
     if [[ -z "$package_path" ]]; then
         echo "error: package was not produced for $label" >&2
         exit 1
@@ -113,23 +99,4 @@ build_one ios16 16.5 16.0
 # build against the iOS 16 SDK while retaining iOS 15+ ABI support.
 build_one ios17 16.5 15.0
 
-# Persist the version only after both platform builds have completed.
-CONTROL_TMP="$(mktemp "$ROOT_DIR/control.tmp.XXXXXX")"
-trap 'rm -f "$CONTROL_TMP"' EXIT
-
-awk -v next_version="$NEXT_VERSION" '
-    BEGIN { updated = 0 }
-    /^Version:/ {
-        print "Version: " next_version
-        updated = 1
-        next
-    }
-    { print }
-    END {
-        if (!updated) exit 1
-    }
-' "$ROOT_DIR/control" > "$CONTROL_TMP"
-mv "$CONTROL_TMP" "$ROOT_DIR/control"
-trap - EXIT
-
-echo "==> Build completed successfully: $PACKAGE_VERSION -> $NEXT_VERSION"
+echo "==> Build completed successfully: $PACKAGE_ID $PACKAGE_VERSION"
